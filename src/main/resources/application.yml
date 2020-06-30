@@ -1,0 +1,5 @@
+app:
+  datasource:
+    jdbc-url: jdbc:postgresql://localhost:5432/xtm
+    username: drlf
+    password: bezhasla1
