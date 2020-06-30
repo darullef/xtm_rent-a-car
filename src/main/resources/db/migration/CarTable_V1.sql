@@ -1,0 +1,5 @@
+CREATE TABLE Car (
+    car_id UUID NOT NULL PRIMARY KEY,
+    made VARCHAR NOT NULL,
+    model VARCHAR NOT NULL
+)
