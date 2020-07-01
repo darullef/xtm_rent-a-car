@@ -6,12 +6,12 @@ XTM Java QA Staż - zadanie rekrutacyjne
 
 Do uruchomienia projektu wymagany jest [Docker](https://www.docker.com/get-started) z uruchomionym obrazem bazy danych [Postgres](https://hub.docker.com/_/postgres)
 
-```
+```bash
 docker pull postgres:alpine
 docker run --name postgres_db -e POSTGRES_PASSWORD=bezhasla1 -d -p 5432:5432 postgres:alpine
 ```
 Po utworzeniu kontenera logujemy się do psql
-```
+```bash
 docker exec -it postgres_db bash
 psql -U postgres
 ```
