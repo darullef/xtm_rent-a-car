@@ -72,11 +72,13 @@ public class RentService {
         return rentRepository.findById(uuid).get();
     }
 
-    public void updateRent(Rent oldRent, Rent newRent) {
-        oldRent.setStart(newRent.getStart());
-        oldRent.setEnd(newRent.getEnd());
-        oldRent.setCar(newRent.getCar());
-        oldRent.setClient(newRent.getClient());
+    public void updateRent(Rent oldRent, Date start, Date end, UUID client_id, UUID car_id) {
+        Client client = clientRepository.findById(client_id).get();
+        Car car = carRepository.findById(car_id).get();
+        oldRent.setStart(start);
+        oldRent.setEnd(end);
+        oldRent.setClient(client);
+        oldRent.setCar(car);
         rentRepository.save(oldRent);
     }
 

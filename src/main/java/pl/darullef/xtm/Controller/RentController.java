@@ -26,7 +26,7 @@ public class RentController {
     private RentService rentService;
 
     @PostMapping
-    public ResponseEntity<?> addRent(HttpEntity<String> httpEntity) throws Exception {
+    public ResponseEntity<?> addRent(HttpEntity<String> httpEntity) throws org.json.simple.parser.ParseException {
         JSONParser parser = new JSONParser();
         JSONObject json = (JSONObject) parser.parse(httpEntity.getBody());
         Date rent_start, rent_end;
@@ -88,10 +88,35 @@ public class RentController {
     }
 
     @PutMapping(path = "/{uuid}")
-    public ResponseEntity<?> updateRent(@PathVariable("uuid") UUID uuid, @RequestBody Rent newRent) {
+    public ResponseEntity<?> updateRent(@PathVariable("uuid") UUID uuid, HttpEntity<String> httpEntity) throws org.json.simple.parser.ParseException {
+        JSONParser parser = new JSONParser();
+        JSONObject json = (JSONObject) parser.parse(httpEntity.getBody());
+        Date rent_start, rent_end;
+        UUID client_id, car_id;
+
+        try {
+            java.util.Date rent_start_temp = new SimpleDateFormat("dd/MM/yyyy").parse(json.get("rent_start").toString());
+            java.util.Date rent_end_temp = new SimpleDateFormat("dd/MM/yyyy").parse(json.get("rent_end").toString());
+            rent_start = new Date(rent_start_temp.getTime());
+            rent_end = new Date(rent_end_temp.getTime());
+        } catch (ParseException ex) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Start & end date required"
+            );
+        }
+
+        try {
+            client_id = UUID.fromString(json.get("client_id").toString());
+            car_id = UUID.fromString(json.get("car_id").toString());
+        } catch (IllegalArgumentException | NoSuchElementException ex) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Bad UUID format"
+            );
+        }
+
         try {
             Rent oldRent = rentService.getRentById(uuid);
-            rentService.updateRent(oldRent, newRent);
+            rentService.updateRent(oldRent, rent_start, rent_end, client_id, car_id);
             return new ResponseEntity<>(oldRent, HttpStatus.OK);
         } catch (NoSuchElementException ex) {
             throw new ResponseStatusException(
