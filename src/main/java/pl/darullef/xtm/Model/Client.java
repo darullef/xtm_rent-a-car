@@ -16,7 +16,8 @@ public class Client {
     @Column(name = "name")
     private String name;
 
-    public Client() {}
+    public Client() {
+    }
 
     public Client(UUID client_id, @NotBlank String name) {
         this.client_id = client_id;

@@ -20,10 +20,9 @@ public class ClientService {
     }
 
     public List<Client> getAllClients() {
-        if(clientRepository.findAll().isEmpty()) {
+        if (clientRepository.findAll().isEmpty()) {
             throw new NoSuchElementException();
-        }
-        else return clientRepository.findAll();
+        } else return clientRepository.findAll();
     }
 
     public Client getClientById(UUID uuid) {

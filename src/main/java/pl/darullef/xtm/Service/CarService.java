@@ -20,10 +20,9 @@ public class CarService {
     }
 
     public List<Car> getAllCars() {
-        if(carRepository.findAll().isEmpty()) {
+        if (carRepository.findAll().isEmpty()) {
             throw new NoSuchElementException();
-        }
-        else return carRepository.findAll();
+        } else return carRepository.findAll();
     }
 
     public Car getCarById(UUID uuid) {

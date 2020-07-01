@@ -11,5 +11,6 @@ import java.util.UUID;
 @Repository
 public interface RentRepository extends JpaRepository<Rent, UUID> {
     Optional<Rent> findById(UUID id);
+
     List<Rent> findAll();
 }

@@ -20,7 +20,8 @@ public class Car {
     @Column(name = "model")
     private String model;
 
-    public Car() {}
+    public Car() {
+    }
 
     public Car(UUID car_id, @NotBlank String made, @NotBlank String model) {
         this.car_id = car_id;

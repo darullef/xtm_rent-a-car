@@ -25,7 +25,8 @@ public class Rent {
     @OneToOne(targetEntity = Car.class)
     private Car car;
 
-    public Rent() {}
+    public Rent() {
+    }
 
     public Rent(UUID rent_id, @NotBlank Date start, @NotBlank Date end, Client client, Car car) {
         this.rent_id = rent_id;

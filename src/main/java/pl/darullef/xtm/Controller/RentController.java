@@ -53,8 +53,14 @@ public class RentController {
         }
         // TODO: NoSuchElementException nie jest łapany, gdy uuid jest za krótkie
 
-        Rent rent = rentService.createRent(rent_start, rent_end, client_id, car_id);
-        return new ResponseEntity<>(rent, HttpStatus.CREATED);
+        try {
+            Rent rent = rentService.createRent(rent_start, rent_end, client_id, car_id);
+            return new ResponseEntity<>(rent, HttpStatus.CREATED);
+        } catch (NullPointerException ex) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT, "Can not create a rent. Car is taken in this period of time"
+            );
+        }
     }
 
     @GetMapping
