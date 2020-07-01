@@ -1,0 +1,4 @@
+CREATE TABLE Car (
+     client_id UUID NOT NULL PRIMARY KEY,
+     name VARCHAR NOT NULL
+)
