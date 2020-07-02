@@ -25,7 +25,7 @@ public class OverlapTest {
         end1 = new Date(tempEnd1.getTime());
         start2 = new Date(tempStart2.getTime());
         end2 = new Date(tempEnd2.getTime());
-        Assert.assertEquals(rentService.isOverlapping(start1, end1, start2, end2), true);
+        Assert.assertEquals(true, rentService.isOverlapping(start1, end1, start2, end2));
     }
 
     @Test
@@ -40,7 +40,7 @@ public class OverlapTest {
         end1 = new Date(tempEnd1.getTime());
         start2 = new Date(tempStart2.getTime());
         end2 = new Date(tempEnd2.getTime());
-        Assert.assertEquals(rentService.isOverlapping(start1, end1, start2, end2), true);
+        Assert.assertEquals(true, rentService.isOverlapping(start1, end1, start2, end2));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class OverlapTest {
         end1 = new Date(tempEnd1.getTime());
         start2 = new Date(tempStart2.getTime());
         end2 = new Date(tempEnd2.getTime());
-        Assert.assertEquals(rentService.isOverlapping(start1, end1, start2, end2), true);
+        Assert.assertEquals(true, rentService.isOverlapping(start1, end1, start2, end2));
     }
 
     @Test
@@ -70,7 +70,7 @@ public class OverlapTest {
         end1 = new Date(tempEnd1.getTime());
         start2 = new Date(tempStart2.getTime());
         end2 = new Date(tempEnd2.getTime());
-        Assert.assertEquals(rentService.isOverlapping(start1, end1, start2, end2), true);
+        Assert.assertEquals(true, rentService.isOverlapping(start1, end1, start2, end2));
     }
 
     @Test
@@ -85,7 +85,7 @@ public class OverlapTest {
         end1 = new Date(tempEnd1.getTime());
         start2 = new Date(tempStart2.getTime());
         end2 = new Date(tempEnd2.getTime());
-        Assert.assertEquals(rentService.isOverlapping(start1, end1, start2, end2), true);
+        Assert.assertEquals(true, rentService.isOverlapping(start1, end1, start2, end2));
     }
 
     @Test
@@ -100,7 +100,7 @@ public class OverlapTest {
         end1 = new Date(tempEnd1.getTime());
         start2 = new Date(tempStart2.getTime());
         end2 = new Date(tempEnd2.getTime());
-        Assert.assertEquals(rentService.isOverlapping(start1, end1, start2, end2), true);
+        Assert.assertEquals(true, rentService.isOverlapping(start1, end1, start2, end2));
     }
 
     @Test
@@ -115,7 +115,7 @@ public class OverlapTest {
         end1 = new Date(tempEnd1.getTime());
         start2 = new Date(tempStart2.getTime());
         end2 = new Date(tempEnd2.getTime());
-        Assert.assertEquals(rentService.isOverlapping(start1, end1, start2, end2), true);
+        Assert.assertEquals(true, rentService.isOverlapping(start1, end1, start2, end2));
     }
 
     @Test
@@ -130,6 +130,6 @@ public class OverlapTest {
         end1 = new Date(tempEnd1.getTime());
         start2 = new Date(tempStart2.getTime());
         end2 = new Date(tempEnd2.getTime());
-        Assert.assertEquals(rentService.isOverlapping(start1, end1, start2, end2), false);
+        Assert.assertEquals(false, rentService.isOverlapping(start1, end1, start2, end2));
     }
 }

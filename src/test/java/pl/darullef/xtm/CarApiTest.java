@@ -14,6 +14,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -126,5 +127,25 @@ public class CarApiTest {
         System.out.println(uuid);
 
         Assert.assertEquals(HttpStatus.SC_OK, response2.getStatusLine().getStatusCode());
+    }
+
+    @Test
+    public void checkCarContent() throws IOException, ParseException {
+        CloseableHttpClient client = HttpClients.createDefault();
+        HttpPost httpPost = new HttpPost("http://localhost:8080/api/car");
+
+        String jsonString1 = "{\r\n    \"made\": \"Volvo\",\r\n    \"model\": \"XC40\"\r\n}";
+        StringEntity entity1 = new StringEntity(jsonString1);
+        httpPost.setEntity(entity1);
+        httpPost.setHeader("Accept", "application/json");
+        httpPost.setHeader("Content-type", "application/json");
+        CloseableHttpResponse response1 = client.execute(httpPost);
+
+        String responseBody = EntityUtils.toString(response1.getEntity(), StandardCharsets.UTF_8);
+        JSONParser parser = new JSONParser();
+        JSONObject json = (JSONObject) parser.parse(responseBody);
+        String model = json.get("model").toString();
+
+        Assert.assertEquals(model, "XC40");
     }
 }
