@@ -14,6 +14,8 @@ import pl.darullef.xtm.Service.RentService;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -30,14 +32,18 @@ public class RentController {
     List<Date> parsedDate(HttpEntity<String> httpEntity) throws org.json.simple.parser.ParseException {
         JSONObject json = (JSONObject) parser.parse(httpEntity.getBody());
         List<Date> dates = new ArrayList<>();
+        Date todayDate = Date.valueOf(LocalDate.now());
         try {
             java.util.Date rent_start_temp = new SimpleDateFormat("dd/MM/yyyy").parse(json.get("rent_start").toString());
             java.util.Date rent_end_temp = new SimpleDateFormat("dd/MM/yyyy").parse(json.get("rent_end").toString());
             dates.add(new Date(rent_start_temp.getTime()));
             dates.add(new Date(rent_end_temp.getTime()));
-        } catch (ParseException ex) {
+            if(todayDate.after(dates.get(0))) {
+                throw new DateTimeException("Start date can not be before " + todayDate);
+            }
+        } catch (DateTimeException | ParseException ex) {
             throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST
+                    HttpStatus.BAD_REQUEST, ex.getMessage()
             );
         }
         return dates;
