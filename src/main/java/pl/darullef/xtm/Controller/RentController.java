@@ -41,6 +41,9 @@ public class RentController {
             if (todayDate.after(dates.get(0))) {
                 throw new DateTimeException("Start date can not be before " + todayDate);
             }
+            if (dates.get(0).after(dates.get(1))) {
+                throw new DateTimeException("Start date can not be after end date");
+            }
         } catch (DateTimeException | ParseException ex) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, ex.getMessage()
