@@ -1,15 +1,11 @@
 package pl.darullef.xtm.Service;
 
-import org.postgresql.util.PSQLException;
-import org.postgresql.util.ServerErrorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.darullef.xtm.Model.Car;
 import pl.darullef.xtm.Repository.CarRepository;
 import pl.darullef.xtm.Repository.RentRepository;
 
-import javax.xml.crypto.NoSuchMechanismException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -42,7 +38,10 @@ public class CarService {
         carRepository.save(oldCar);
     }
 
-    public void deleteCar(UUID uuid) {
-        carRepository.delete(carRepository.findById(uuid).get());
+    public int deleteCar(UUID uuid) {
+        Car car = carRepository.findById(uuid).get();
+        int rents = rentRepository.findAllByCar(car).size();
+        carRepository.delete(car);
+        return rents;
     }
 }

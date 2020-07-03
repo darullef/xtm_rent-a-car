@@ -33,7 +33,7 @@ public class ClientController {
             return new ResponseEntity<>(clientList, HttpStatus.OK);
         } catch (NoSuchElementException ex) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND
+                    HttpStatus.NOT_FOUND, "No clients to display"
             );
         }
     }
@@ -45,7 +45,7 @@ public class ClientController {
             return new ResponseEntity<>(client, HttpStatus.OK);
         } catch (NoSuchElementException ex) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND
+                    HttpStatus.NOT_FOUND, "Client with given ID does not exist"
             );
         }
     }
@@ -58,7 +58,7 @@ public class ClientController {
             return new ResponseEntity<>(oldClient, HttpStatus.OK);
         } catch (NoSuchElementException ex) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND
+                    HttpStatus.NOT_FOUND, "Client with given ID does not exist"
             );
         }
     }
@@ -66,11 +66,12 @@ public class ClientController {
     @DeleteMapping(path = "/{uuid}")
     public ResponseEntity<?> deleteClient(@PathVariable("uuid") UUID uuid) {
         try {
-            clientService.deleteClient(uuid);
-            return new ResponseEntity<>("Client with id " + uuid + " has been deleted", HttpStatus.OK);
+            int rents = clientService.deleteClient(uuid);
+            return new ResponseEntity<>("Client with id " + uuid + " has been deleted \n" +
+                    "Client was used in " + rents + " rents, which was/were also removed", HttpStatus.OK);
         } catch (NoSuchElementException ex) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND
+                    HttpStatus.NOT_FOUND, "Client with given ID does not exist"
             );
         }
     }

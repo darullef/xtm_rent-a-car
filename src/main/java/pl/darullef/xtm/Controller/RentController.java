@@ -38,7 +38,7 @@ public class RentController {
             java.util.Date rent_end_temp = new SimpleDateFormat("dd/MM/yyyy").parse(json.get("rent_end").toString());
             dates.add(new Date(rent_start_temp.getTime()));
             dates.add(new Date(rent_end_temp.getTime()));
-            if(todayDate.after(dates.get(0))) {
+            if (todayDate.after(dates.get(0))) {
                 throw new DateTimeException("Start date can not be before " + todayDate);
             }
         } catch (DateTimeException | ParseException ex) {
@@ -57,7 +57,7 @@ public class RentController {
             uuids.add(UUID.fromString(json.get("car_id").toString()));
         } catch (IllegalArgumentException | NoSuchElementException ex) {
             throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST
+                    HttpStatus.BAD_REQUEST, "Wrong UUID format"
             );
         }
         return uuids;
@@ -84,7 +84,7 @@ public class RentController {
             return new ResponseEntity<>(rentList, HttpStatus.OK);
         } catch (NoSuchElementException ex) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND
+                    HttpStatus.NOT_FOUND, "No rents to display"
             );
         }
     }
@@ -96,7 +96,7 @@ public class RentController {
             return new ResponseEntity<>(rent, HttpStatus.OK);
         } catch (NoSuchElementException ex) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND
+                    HttpStatus.NOT_FOUND, "Rent with given ID does not exist"
             );
         }
     }
@@ -111,7 +111,7 @@ public class RentController {
             return new ResponseEntity<>(oldRent, HttpStatus.OK);
         } catch (NoSuchElementException ex) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND
+                    HttpStatus.NOT_FOUND, "Rent with given ID does not exist"
             );
         }
     }
@@ -123,7 +123,7 @@ public class RentController {
             return new ResponseEntity<>("Rent with id " + uuid + " has been deleted", HttpStatus.OK);
         } catch (NoSuchElementException ex) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND
+                    HttpStatus.NOT_FOUND, "Rent with given ID does not exist"
             );
         }
     }

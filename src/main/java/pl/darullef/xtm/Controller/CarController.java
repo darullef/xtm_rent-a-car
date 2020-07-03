@@ -1,6 +1,5 @@
 package pl.darullef.xtm.Controller;
 
-import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +9,6 @@ import pl.darullef.xtm.Model.Car;
 import pl.darullef.xtm.Service.CarService;
 
 import javax.validation.Valid;
-import javax.xml.crypto.NoSuchMechanismException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -36,7 +33,7 @@ public class CarController {
             return new ResponseEntity<>(carsList, HttpStatus.OK);
         } catch (NoSuchElementException ex) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND
+                    HttpStatus.NOT_FOUND, "No cars to display"
             );
         }
     }
@@ -48,7 +45,7 @@ public class CarController {
             return new ResponseEntity<>(car, HttpStatus.OK);
         } catch (NoSuchElementException ex) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND
+                    HttpStatus.NOT_FOUND, "Car with given ID does not exist"
             );
         }
     }
@@ -61,7 +58,7 @@ public class CarController {
             return new ResponseEntity<>(oldCar, HttpStatus.OK);
         } catch (NoSuchElementException ex) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND
+                    HttpStatus.NOT_FOUND, "Car with given ID does not exist"
             );
         }
     }
@@ -69,11 +66,12 @@ public class CarController {
     @DeleteMapping(path = "/{uuid}")
     public ResponseEntity<?> deleteCar(@PathVariable("uuid") UUID uuid) {
         try {
-            carService.deleteCar(uuid);
-            return new ResponseEntity<>("Car with id " + uuid + " has been deleted", HttpStatus.OK);
+            int rents = carService.deleteCar(uuid);
+            return new ResponseEntity<>("Car with id " + uuid + " has been deleted \n" +
+                    "Car was used in " + rents + " rents, which was/were also removed", HttpStatus.OK);
         } catch (NoSuchElementException ex) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND
+                    HttpStatus.NOT_FOUND, "Car with given ID does not exist"
             );
         }
     }
