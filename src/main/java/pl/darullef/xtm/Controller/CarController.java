@@ -1,5 +1,6 @@
 package pl.darullef.xtm.Controller;
 
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,8 @@ import pl.darullef.xtm.Model.Car;
 import pl.darullef.xtm.Service.CarService;
 
 import javax.validation.Valid;
+import javax.xml.crypto.NoSuchMechanismException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;

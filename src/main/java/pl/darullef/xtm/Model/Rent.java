@@ -1,5 +1,8 @@
 package pl.darullef.xtm.Model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.sql.Date;
@@ -20,9 +23,11 @@ public class Rent {
     private Date end;
 
     @OneToOne(targetEntity = Client.class)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Client client;
 
     @OneToOne(targetEntity = Car.class)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Car car;
 
     public Rent() {
